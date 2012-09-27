@@ -135,8 +135,8 @@ class InspectorAgent(threading.Thread):
 
     def run(self):
         # Compile the ModuleInspector:
-        sublime.status_message('Compiling Haskell ModuleInspector...')
-        exit_code, out, err = call_and_wait(['ghc',
+        # sublime.status_message('Compiling Haskell ModuleInspector...')
+        exit_code, out, err = call_and_wait([], ['ghc',
             '--make', MODULE_INSPECTOR_SOURCE_PATH,
             '-o', MODULE_INSPECTOR_EXE_PATH,
             '-outputdir', MODULE_INSPECTOR_OBJ_DIR])
@@ -206,7 +206,7 @@ class InspectorAgent(threading.Thread):
             inspection_time = self._get_inspection_time_of_file(filename)
             if modification_time <= inspection_time:
                 return
-        exit_code, stdout, stderr = call_and_wait(
+        exit_code, stdout, stderr = call_and_wait([],
             [MODULE_INSPECTOR_EXE_PATH, filename])
         if exit_code == 0:
             new_info = json.loads(stdout)
